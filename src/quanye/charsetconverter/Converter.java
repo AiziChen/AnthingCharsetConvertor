@@ -1,4 +1,4 @@
-package quanye.charsetconverter;
+﻿package quanye.charsetconverter;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
@@ -18,12 +18,24 @@ import org.apache.commons.io.FileUtils;
 
 import tools.charset.CharsetDetector;
 
+/**
+ * 编码转换工具
+ * @author QuanyeChen
+ * License on Apache 2.0
+ *
+ */
 public class Converter extends JFrame {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	private static final String[] TEXT_TYPES = {
+		".txt",
+		".xml",
+		".java"
+	};
+	
 	private JPanel panel = new JPanel();
 	private JFileChooser chooser = new JFileChooser();
 
@@ -31,6 +43,9 @@ public class Converter extends JFrame {
 		new Converter().initWindow();
 	}
 
+	/**
+	 * 初始化窗口
+	 */
 	private void initWindow() {
 		chooser.setMultiSelectionEnabled(false);
 		chooser.setDialogTitle("第一步：请指定一个需要批量修改编码的文件夹");
@@ -52,6 +67,8 @@ public class Converter extends JFrame {
 			int height = this.getHeight();
 			int width = this.getWidth();
 			setBounds(screenWidth - width / 2, screenHeight - height / 2 - 100, 380, 260);
+		} else {
+			System.exit(0);
 		}
 
 	}
@@ -108,7 +125,7 @@ public class Converter extends JFrame {
 		for (File file : files) {
 			if (file.isFile()) {
 				String fileName = file.getName();
-				if (fileName.endsWith(".txt") || fileName.endsWith(".java") || fileName.endsWith(".xml")) {
+				if (isAllEndWith(TEXT_TYPES, fileName)) {
 					// 转换
 					String coding = CharsetDetector.getInstance().getCharSet(file).name();
 					// 相同编码不用转
@@ -121,6 +138,21 @@ public class Converter extends JFrame {
 				convert(file, charSet);
 			}
 		}
+	}
+
+	/**
+	 * fileName是否以textTypes中的文本为结尾
+	 * @param textTypes
+	 * @param fileName
+	 * @return
+	 */
+	private boolean isAllEndWith(String[] textTypes, String fileName) {
+		for (String type : textTypes) {
+			if (fileName.endsWith(type)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 }

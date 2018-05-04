@@ -8,8 +8,12 @@ import info.monitorenter.cpdetector.io.ASCIIDetector;
 import info.monitorenter.cpdetector.io.ByteOrderMarkDetector;
 import info.monitorenter.cpdetector.io.CodepageDetectorProxy;
 import info.monitorenter.cpdetector.io.JChardetFacade;
-import info.monitorenter.cpdetector.io.ParsingDetector;
-
+/**
+ * 文件编码获取工具
+ * @author QuanyeChen
+ * License on Apache 2.0
+ *
+ */
 public class CharsetDetector {
 
 	private static CharsetDetector instance;
